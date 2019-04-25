@@ -1,5 +1,6 @@
 package java_s04;
-
+//あいうえおかきくけこさしすせそ
+//あかさたなはまやらわん
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -58,9 +59,9 @@ public class PostResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public int create(int post) throws WebApplicationException {
-		//validate(post);
-		return 2;//dao.create(post);
+	public Post create(Post post) throws WebApplicationException {
+		validate(post);
+		return dao.create(post);
 	}
 
 	/**
