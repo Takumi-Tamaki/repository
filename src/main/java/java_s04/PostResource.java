@@ -1,7 +1,4 @@
 package java_s04;
-//あいうえおかきくけこさしすせそ
-//あかさたなはまやらわん
-あｄｓふぁｄふぁｄｆ
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -49,6 +46,7 @@ public class PostResource {
 		return dao.findById(id);
 	}
 
+	/**
 	/**
 	 * 指定した部署情報を登録する。
 	 * DB上のIDがセットされて返却される。
