@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import beans.Post;
 import dao.PostDAO;
 
+//aaaa
 /**
  * 部署関連のサービス実装。
  */
