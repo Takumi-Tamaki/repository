@@ -1,6 +1,4 @@
 package java_s04;
-//あいうえおかきくけこさしすせそ
-//あかさたなはまやらわん
 import java.util.List;
 
 import javax.ws.rs.Consumes;
