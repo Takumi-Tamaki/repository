@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>経費データベース管理ページ</title>
+		<link rel="stylesheet" href="css/postStyle.css">
+	</head>
+	<body>
+		<div class="main clearfix">
+			<div id="list">
+				<p>経費一覧:</p>
+				<div id="posts"></div>
+				<div id="insertBlock">
+					<button type="button" id="newPost">経費追加</button>
+				</div>
+			</div>
+			<div id="detail">
+				<p>部署追加データ：</p>
+    			<form id="myForm">
+    				<div class="error"></div>
+    				<div>
+    					<!-- IDが自動かどうかわからないのでエラーが起きそう -->
+			            <label for="name">申請ID:</label>
+    	    		    <input type="text" id="postId" disabled>
+        		    </div>
+
+					<div>
+			            <label for="name">タイトル:</label>
+    	    		    <input type="text" maxlength="40" name="title" required>
+    	    		</div>
+    	    		<div>
+    	    			<label for = "name">申請日:</label>
+    	    			<input type="text" maxlength = "40" name="date" required>
+    	    		</div>
+    	    		<div>
+    	    			<label for = "name">申請者:</label>
+    	    			<input type="text" maxlength = "40" name = "person" required>
+    	    		</div>
+    	    		<div>
+    	    			<label for = "name">金額:</label>
+    	    			<input type="text" maxlength = "20" name = "price" required>
+    	    		</div>
+    	    		<div>
+    	    			<label for = "name">ステータス:</label>
+    	    		</div>
+
+        			<button id="savePost">保存</button>
+			    </form>
+			</div>
+		</div>
+
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/expense.js"></script>
+
+	</body>
+</html>
