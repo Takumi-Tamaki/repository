@@ -13,15 +13,15 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.Post;
-import dao.PostDAO;
+import beans.Expense;
+import dao.ExpenseDAO;
 
 /**
  * 部署関連のサービス実装。
  */
-@Path("posts")
-public class PostResource {
-	private final PostDAO dao = new PostDAO();
+@Path("expense")
+public class ExpenseResorce {
+	private final ExpenseDAO dao = new ExpenseDAO();
 
 	/**
 	 * 一覧用に部署情報を全件取得する。
@@ -29,7 +29,7 @@ public class PostResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Post> findAll() {
+	public List<Expense> findAll() {
 		return dao.findAll();
 	}
 
@@ -42,7 +42,7 @@ public class PostResource {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Post findById(@PathParam("id") int id) {
+	public Expense findById(@PathParam("id") int id) {
 		return dao.findById(id);
 	}
 
@@ -58,7 +58,7 @@ public class PostResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Post create(Post post) throws WebApplicationException {
+	public Expense create(Expense post) throws WebApplicationException {
 		System.out.println(post);
 		validate(post);
 		return dao.create(post);
@@ -73,7 +73,7 @@ public class PostResource {
 	@PUT
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void update(Post post) throws WebApplicationException {
+	public void update(Expense post) throws WebApplicationException {
 		validate(post);
 		dao.update(post);
 	}
@@ -94,8 +94,10 @@ public class PostResource {
 	 * @param post 入力データを保持したモデル
 	 * @throws ValidationException 入力データチェックに失敗した場合に送出される。
 	 */
-	private void validate(Post post) throws WebApplicationException {
-		if (post.getName().isEmpty()) {
+	private void validate(Expense post) throws WebApplicationException {
+		if (post.getExpenseTitle().isEmpty() || post.getAppricationDate().isEmpty()
+				|| post.getAppricant().isEmpty()|| String.valueOf(post.getPrice()).isEmpty()
+				|| post.getStatus().isEmpty()) {
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
 	}

@@ -1,20 +1,26 @@
 'use strict';
 
-var rootUrl = "/java_s04/api/v1.1/posts";
+var rootUrl = "/java_s04/api/v1.1/expense";
 findAll();
 
 $('#savePost').click(function() {
-	var name = $('#name').val();
-	if (name === '') {
-		$('.error').text('名前は必須入力です。');
+	var title = $('[name = "title"').val();
+	var date = $('[name = "date"]').val();
+	var person = $('[name = "person"]').val();
+	var price = $('[name = "price"]').val();
+	var status = $('[name = "status"]').val();
+	if (title === ''||date === '' ||person === '' ||price === ''|| status === '') {
+		$('.error').text('必須入力事項が抜けています。');
 		return false;
 	} else {
 		$('.error').text('');
 	}
 
 	var id = $('#postId').val()
-	if (id == '')
+	if (id == ''){
+		console.log('idは自動でつけるよ',id);
 		addPost();
+	}
 	else
 		updatePost(id);
 	return false;
@@ -41,7 +47,7 @@ function findById(id) {
 		url: rootUrl+'/'+id,
 		dataType: "json",
 		success: function(data) {
-			console.log('findById success: ' + data.name);
+			console.log('findById success: ' + data);
 			renderDetails(data)
 		}
 	});
@@ -49,6 +55,7 @@ function findById(id) {
 
 function addPost() {
 	console.log('addPost start');
+	console.log('送るデータの確認',formToJSON());
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
@@ -56,12 +63,12 @@ function addPost() {
 		dataType: "json",
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
-			alert('部署データの追加に成功しました');
-			$('#postId').val(data.id);
+			alert('経費データの追加に成功しました');
+			$('#postId').val(data.appricationId);
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('部署データの追加に失敗しました');
+			alert('経費データの追加に失敗しました');
 		}
 	})
 }
@@ -75,11 +82,11 @@ function updatePost(id) {
 		dataType: "json",
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
-			alert('部署データの更新に成功しました');
+			alert('経費データの更新に成功しました');
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('部署データの更新に失敗しました');
+			alert('経費データの更新に失敗しました');
 		}
 	})
 }
@@ -92,16 +99,34 @@ function deleteById(id) {
 		url: rootUrl+'/'+id,
 		success: function() {
 			findAll();
+			//入力フォームの初期化
 			$('#postId').val('');
-			$('#name').val('');
+			$('[name="title"]').val('');
+			$('[name = "date"]').val('');
+			$('[name = "person"]').val('');
+			$('[name = "price"]').val('');
+			$('[name = "status"]').val('');
+			alert('削除に成功しました')
+
 		}
 	});
 }
 
 function renderTable(data) {
-	var headerRow = '<tr><th>ID</th><th>部署名</th></tr>';
+
+	//確認用のコンソール
+	console.log('返却地search', data);
+	var headerRow = '<tr><th>ID</th><th>タイトル</th></th>';
+	headerRow += '<th>申請日</th><th>申請者</th><th>金額</th><th>ステータス</th><th></th><th></th></tr>';
 
 	$('#posts').children().remove();
+
+//	$('#postId').val(post.appricatinId);
+//	$('[name="title"]').val(post.expenseTitle);
+//	$('[name = "date"]').val(post.appricationDate);
+//	$('[name = "person"]').val(post.appricant);
+//	$('[name = "price"]').val(post.price);
+//	$('[name = "status"]').val(post.status);
 
 	if (data.length === 0) {
 		$('#posts').append('<p>現在データが存在していません。</p>')
@@ -110,13 +135,17 @@ function renderTable(data) {
 		table.append(headerRow);
 		$.each(data, function(index, post) {
 			var row = $('<tr>');
-			row.append($('<td>').text(post.id));
-			row.append($('<td>').text(post.name));
+			row.append($('<td>').text(post.appricationId));
+			row.append($('<td>').text(post.expenseTitle));
+			row.append($('<td>').text(post.appricationDate));
+			row.append($('<td>').text(post.appricant));
+			row.append($('<td>').text(post.price));
+			row.append($('<td>').text(post.status));
 			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button").attr("onclick", "findById("+post.id+')')
+					$('<button>').text("編集").attr("type","button").attr("onclick", "findById("+post.appricationId+')')
 				));
 			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button").attr("onclick", "deleteById("+post.id+')')
+					$('<button>').text("削除").attr("type","button").attr("onclick", "deleteById("+post.appricationId+')')
 				));
 			table.append(row);
 		});
@@ -128,14 +157,22 @@ function renderTable(data) {
 
 function renderDetails(post) {
 	$('.error').text('');
-	$('#postId').val(post.id);
-	$('#name').val(post.name);
+	$('#postId').val(post.appricationId);
+	$('[name="title"]').val(post.expenseTitle);
+	$('[name = "date"]').val(post.appricationDate);
+	$('[name = "person"]').val(post.appricant);
+	$('[name = "price"]').val(post.price);
+	$('[name = "status"]').val(post.status);
 }
 
 function formToJSON() {
 	var postId = $('#postId').val();
 	return JSON.stringify({
-		"id": (postId == "" ? 0 : postId),
-		"name": $('#name').val()
+		"appricationId": (postId == '' ? 0 : postId),
+		"expenseTitle": $('[name = "title"]').val(),
+		"appricationDate": $('[name = "date"]').val(),
+		"appricant": $('[name = "person"]').val(),
+		"price": $('[name = "price"]').val(),
+		"status": $('[name = "status"]').val()
 	});
 }

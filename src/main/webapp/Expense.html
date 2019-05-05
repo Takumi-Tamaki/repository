@@ -15,13 +15,13 @@
 				</div>
 			</div>
 			<div id="detail">
-				<p>部署追加データ：</p>
+				<p>経費追加データ：</p>
     			<form id="myForm">
     				<div class="error"></div>
     				<div>
     					<!-- IDが自動かどうかわからないのでエラーが起きそう -->
 			            <label for="name">申請ID:</label>
-    	    		    <input type="text" id="postId" disabled>
+    	    		    <input type="text" id = "postId" disabled>
         		    </div>
 
 					<div>
@@ -42,6 +42,7 @@
     	    		</div>
     	    		<div>
     	    			<label for = "name">ステータス:</label>
+    	    			<input type="text" maxlength = "20" name = "status" required>
     	    		</div>
 
         			<button id="savePost">保存</button>
