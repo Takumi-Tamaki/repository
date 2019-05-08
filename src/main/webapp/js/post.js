@@ -1,9 +1,6 @@
 'use strict';
 
 var rootUrl = "/java_s04/api/v1.1/posts";
-/*
- * v1.1ってだれですか
- */
 findAll();
 
 $('#savePost').click(function() {
@@ -52,6 +49,7 @@ function findById(id) {
 
 function addPost() {
 	console.log('addPost start');
+	console.log('送信する値の確認', formToJSON());
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
@@ -71,6 +69,7 @@ function addPost() {
 
 function updatePost(id) {
 	console.log('updatePost start');
+	console.log('formToJSON', formToJSON())
 	$.ajax({
 		type: "PUT",
 		contentType: "application/json",
