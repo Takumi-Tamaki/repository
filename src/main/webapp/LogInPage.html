@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/postStyle.css">
+		<title>ログインページ</title>
+	</head>
+	<body>
+		<h1>IDとパスワードを入力してください</h1>
+		<form id = "myForm">
+			ID:<input type = "text" name = "id">
+			<br>
+			パスワード:<input type = "text" name = "pass">
+			<br>
+		</form>
+		<input type = "button" id = "logIn" value = "ログイン">
 
-</body>
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/logInPage.js"></script>
+	</body>
 </html>
